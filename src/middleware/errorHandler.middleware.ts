@@ -1,10 +1,10 @@
-import {NextFunction, Request, Response} from 'express';
+import {Request, Response} from 'express';
 
 import type {ErrorRequestHandler} from 'express';
 
 import {Error} from '../models/errors.models';
 
-const errorHandler: ErrorRequestHandler = (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+const errorHandler: ErrorRequestHandler = (err: Error, _req: Request, res: Response) => {
 	if (err.status) {
 		res.status(err.status).json({error: {status: err.status, message: err.message}});
 	}

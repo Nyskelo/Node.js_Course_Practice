@@ -1,8 +1,8 @@
 import {Movie} from '../models/movies.models';
 import {v4 as uuidv4} from 'uuid';
+import {promises as fs} from 'fs';
+import path from 'path';
 
-const fs = require('fs/promises');
-const path = require('path');
 const moviesPath = path.resolve(__dirname, '../db/movies.db.json');
 
 const writeMovies = async (movies: Movie[]) => {

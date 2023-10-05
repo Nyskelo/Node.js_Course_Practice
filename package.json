@@ -6,7 +6,9 @@
 	"scripts": {
 		"start": "ts-node server.ts",
 		"start:dev": "nodemon --exec ts-node server.ts",
-		"build": "tsc -p ."
+		"build": "tsc -p .",
+		"eslint": "eslint . --ext .ts",
+		"eslint:fix": "eslint . --ext .ts --fix"
 	},
 	"author": "Alla Oleksyn",
 	"license": "ISC",
@@ -16,6 +18,9 @@
 		"@types/node": "^20.8.2",
 		"@types/swagger-jsdoc": "^6.0.1",
 		"@types/swagger-ui-express": "^4.1.4",
+		"@typescript-eslint/eslint-plugin": "^6.7.4",
+		"@typescript-eslint/parser": "^6.7.4",
+		"eslint": "^8.50.0",
 		"nodemon": "^3.0.1",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.0",
