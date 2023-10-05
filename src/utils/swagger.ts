@@ -1,6 +1,6 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
-import {moviesSchema, moviesBodySchema, moviesSwaggerDocsPath} from '../schemas/movies.schemas';
+import {moviesSchema, moviesBodySchema, moviesSwaggerDocsPathSchema} from '../schemas/movies.schemas';
 
 const swaggerOptions: swaggerJsdoc.Options = {
 	definition: {
@@ -51,7 +51,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
 				}
 			},
 			paths: {
-				...moviesSwaggerDocsPath
+				...moviesSwaggerDocsPathSchema
 			},
 			responses: {
 				200: {

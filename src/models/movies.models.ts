@@ -1,5 +1,3 @@
-import moviesSchema from 'src/schemas/movies.schemas';
-
 export interface Movie {
 	id: string;
 	title: string;
@@ -8,4 +6,9 @@ export interface Movie {
 	genre: string[];
 }
 
-export type MoviesSchema = typeof moviesSchema;
+export interface MovieBody {
+	title: string;
+	description: string;
+	releaseDate: string;
+	genre: string[];
+}

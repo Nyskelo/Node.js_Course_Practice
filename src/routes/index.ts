@@ -6,7 +6,7 @@ import swaggerApiDocs from './swagger-docs.routes';
 import healthCheck from './health-check.routes';
 import moviesRouter from './movies.routes';
 
-const rootRouter = Router();
+const rootRouter: Router = Router();
 
 rootRouter.use(swaggerApiDocs);
 

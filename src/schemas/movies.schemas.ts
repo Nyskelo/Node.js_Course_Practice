@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import j2s from 'joi-to-swagger';
+import j2s, {SwaggerSchema} from 'joi-to-swagger';
 
 const moviesJoiSchema = Joi.object().keys({
 	id: Joi.string().required(),
@@ -16,10 +16,10 @@ const moviesJoiBodySchema = Joi.object().keys({
 	genre: Joi.array().items(Joi.string()).required()
 });
 
-const moviesSchema = j2s(moviesJoiSchema).swagger;
-const moviesBodySchema = j2s(moviesJoiBodySchema).swagger;
+const moviesSchema: SwaggerSchema = j2s(moviesJoiSchema).swagger;
+const moviesBodySchema: SwaggerSchema = j2s(moviesJoiBodySchema).swagger;
 
-const moviesSwaggerDocsPath = {
+const moviesSwaggerDocsPathSchema: SwaggerSchema = {
 	'/movies': {
 		get: {
 			summary: 'Get a list of movies',
@@ -226,4 +226,4 @@ const moviesSwaggerDocsPath = {
 	}
 };
 
-export {moviesSchema, moviesBodySchema, moviesJoiSchema, moviesJoiBodySchema, moviesSwaggerDocsPath};
+export {moviesSchema, moviesBodySchema, moviesJoiSchema, moviesJoiBodySchema, moviesSwaggerDocsPathSchema};

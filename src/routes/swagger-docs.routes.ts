@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 
 import swaggerSpec from '../utils/swagger';
 
-const swaggerApiDocs = Router();
+const swaggerApiDocs: Router = Router();
 
 swaggerApiDocs.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

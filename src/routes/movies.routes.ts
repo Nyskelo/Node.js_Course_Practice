@@ -3,7 +3,7 @@ import {Router, Response, Request, NextFunction} from 'express';
 import * as moviesService from '../services/movies.services';
 import {moviesJoiSchema, moviesJoiBodySchema} from '../schemas/movies.schemas';
 
-const moviesRouter = Router();
+const moviesRouter: Router = Router();
 
 /**
  * @swagger
