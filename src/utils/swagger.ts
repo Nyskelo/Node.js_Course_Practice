@@ -1,5 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
+import {moviesSchema, moviesBodySchema, moviesSwaggerDocsPath} from '../schemas/movies.schemas';
+
 const swaggerOptions: swaggerJsdoc.Options = {
 	definition: {
 		openapi: '3.0.0',
@@ -27,24 +29,109 @@ const swaggerOptions: swaggerJsdoc.Options = {
 						}
 					},
 					example: {uptime: 7.3843028, message: 'OK', timestamp: 1696255732383}
+				},
+				Movies: {
+					...moviesSchema,
+					example: {
+						id: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
+						title: 'The Lion King',
+						description: 'Incredible movie description',
+						releaseDate: '2010-07-16',
+						genre: ['drama', 'comedy', 'horror']
+					}
+				},
+				MovieBody: {
+					...moviesBodySchema,
+					example: {
+						title: 'The Lion King',
+						description: 'Incredible movie description',
+						releaseDate: '2010-07-16',
+						genre: ['drama', 'comedy', 'horror']
+					}
 				}
+			},
+			paths: {
+				...moviesSwaggerDocsPath
 			},
 			responses: {
 				200: {
 					description: 'Success',
-					contents: 'application/json'
+					content: {
+						'application/json': {
+							schema: {
+								type: 'object',
+								example: {status: 200, message: 'Success'}
+							}
+						}
+					}
 				},
 				404: {
 					description: 'Not found',
-					contents: 'application/json'
+					content: {
+						'application/json': {
+							schema: {
+								type: 'object',
+								properties: {
+									error: {
+										type: 'object',
+										description: 'The error message',
+										example: {status: 404, message: 'Not found'}
+									}
+								}
+							}
+						}
+					}
+				},
+				400: {
+					description: 'Invalid input',
+					content: {
+						'application/json': {
+							schema: {
+								type: 'object',
+								properties: {
+									error: {
+										type: 'object',
+										description: 'The error message',
+										example: {status: 400, message: 'Invalid input data'}
+									}
+								}
+							}
+						}
+					}
 				},
 				500: {
 					description: 'Internal Server Error',
-					contents: 'application/json'
+					content: {
+						'application/json': {
+							schema: {
+								type: 'object',
+								properties: {
+									error: {
+										type: 'object',
+										description: 'The error message',
+										example: {status: 500, message: 'Internal Server Error'}
+									}
+								}
+							}
+						}
+					}
 				},
 				503: {
 					description: 'Service Unavailable',
-					contents: 'application/json'
+					content: {
+						'application/json': {
+							schema: {
+								type: 'object',
+								properties: {
+									error: {
+										type: 'object',
+										description: 'The error message',
+										example: {status: 503, message: 'Service Unavailable'}
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 import {Router, Response, Request} from 'express';
 
-import {HealthCheck} from 'src/models/healthCheck.models';
+import {HealthCheck} from 'src/models/health-check.models';
 
 const healthCkeck = Router();
 
@@ -61,7 +61,7 @@ healthCkeck.get('/', (_, res: Response) => {
  *       503:
  *          $ref: '#/components/responses/503'
  */
-healthCkeck.route('/:readiness').get(async (req:Request, res:Response) => {
+healthCkeck.route('/:readiness').get(async (req: Request, res: Response) => {
 	console.log('Readiness Check Request');
 
 	if (req.params.readiness === 'ready') {
