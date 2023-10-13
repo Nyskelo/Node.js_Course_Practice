@@ -1,0 +1,30 @@
+[
+	{
+		"id": "1b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+		"title": "Inception",
+		"description": "A mind-bending science fiction thriller.",
+		"releaseDate": "2010-07-16",
+		"genre": ["Action", "Sci-Fi", "Thriller"]
+	},
+	{
+		"id": "2b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+		"title": "The Shawshank Redemption",
+		"description": "Two imprisoned men bond over several years, finding solace and eventual redemption through acts of common decency.",
+		"releaseDate": "1994-09-23",
+		"genre": ["Drama"]
+	},
+	{
+		"id": "3b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+		"title": "The Dark Knight",
+		"description": "When the menace known as The Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+		"releaseDate": "2008-07-18",
+		"genre": ["Action", "Crime", "Drama"]
+	},
+	{
+		"id": "6a04e1b2-2cf2-467a-b5e5-d606921bf223",
+		"title": "The Lion King 2",
+		"description": "Incredible movie description",
+		"releaseDate": "2010-07-16",
+		"genre": ["drama", "comedy", "horror"]
+	}
+]
