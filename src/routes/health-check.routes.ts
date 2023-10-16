@@ -1,6 +1,6 @@
-import {Router, Response, Request} from 'express';
+import { Router, Response, Request } from 'express';
 
-import {HealthCheck} from 'src/models/health-check.models';
+import { HealthCheck } from 'src/models/health-check.models';
 
 const healthCkeck: Router = Router();
 
@@ -30,11 +30,15 @@ const healthCkeck: Router = Router();
  */
 
 healthCkeck.get('/', (_req: Request, res: Response) => {
-	console.log('Health Check Request');
+  console.log('Health Check Request');
 
-	const healthCheck: HealthCheck = {uptime: process.uptime(), message: 'OK', timestamp: Date.now()};
+  const healthCheck: HealthCheck = {
+    uptime: process.uptime(),
+    message: 'OK',
+    timestamp: Date.now(),
+  };
 
-	res.status(200).json(healthCheck);
+  res.status(200).json(healthCheck);
 });
 
 /**
@@ -62,13 +66,13 @@ healthCkeck.get('/', (_req: Request, res: Response) => {
  *          $ref: '#/components/responses/503'
  */
 healthCkeck.route('/:readiness').get(async (req: Request, res: Response) => {
-	console.log('Readiness Check Request');
+  console.log('Readiness Check Request');
 
-	if (req.params.readiness === 'ready') {
-		res.status(200).json({status: 'Service ailable'});
-	} else {
-		res.status(503).json({status: 'Service Unavailable'});
-	}
+  if (req.params.readiness === 'ready') {
+    res.status(200).json({ status: 'Service ailable' });
+  } else {
+    res.status(503).json({ status: 'Service Unavailable' });
+  }
 });
 
 export default healthCkeck;
