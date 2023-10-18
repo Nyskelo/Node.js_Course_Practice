@@ -1,10 +1,24 @@
 import http from 'http';
+import mongoose from 'mongoose';
+
 import app from './src/app';
-const port = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 3000;
+const CONNECTION_STRING = 'mongodb+srv://allaoleksyn:0x7EU2u6HoiYxPCS@cluster0.nqxzydv.mongodb.net/';
 
 const server = http.createServer(app);
 
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-  console.log(`Docs available at http://localhost:${port}/docs`);
-});
+mongoose
+  .connect(CONNECTION_STRING)
+  .then(() => {
+    console.log(`Connected to db!`);
+
+    server.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+      console.log(`Docs available at http://localhost:${PORT}/docs`);
+    });
+  })
+  .catch(err => {
+    console.log('Error connecting to the database: ', err);
+    process.exit(1);
+  });
