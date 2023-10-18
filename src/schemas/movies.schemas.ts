@@ -1,8 +1,9 @@
 import Joi from 'joi';
 import j2s, { SwaggerSchema } from 'joi-to-swagger';
+import mongoose, { Types } from 'mongoose';
 
 const moviesJoiSchema = Joi.object().keys({
-  id: Joi.string().required(),
+  _id: Joi.string().description('Server-generated ID for the movie'),
   title: Joi.string().required(),
   description: Joi.string().required(),
   releaseDate: Joi.string().required(),
@@ -14,6 +15,25 @@ const moviesJoiBodySchema = Joi.object().keys({
   description: Joi.string().required(),
   releaseDate: Joi.string().required(),
   genre: Joi.array().items(Joi.string()).required(),
+});
+
+const movieMongooseSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  releaseDate: {
+    type: String,
+    required: true,
+  },
+  genre: {
+    type: [String],
+    required: true,
+  },
 });
 
 const moviesSchema: SwaggerSchema = j2s(moviesJoiSchema).swagger;
@@ -38,9 +58,6 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
               },
             },
           },
-        },
-        400: {
-          $ref: '#/components/responses/400',
         },
         404: {
           $ref: '#/components/responses/404',
@@ -149,12 +166,25 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
       ],
       responses: {
         200: {
-          description: 'Returns the created movie',
+          description: 'Returns the deleted movie',
           content: {
             'application/json': {
               schema: {
                 type: 'object',
-                example: { status: 200, message: 'Movie deleted successfully' },
+                example: {
+                  respons: {
+                    status: 200,
+                    message: 'The movie has been deleted',
+                    movie: {
+                      _id: '6530713c9d403ed66accbd42',
+                      title: 'The Lion King 3',
+                      description: 'Incredible movie description 1',
+                      releaseDate: '999999',
+                      genre: ['drama', 'comedy', 'horror'],
+                      __v: 0,
+                    },
+                  },
+                },
               },
             },
           },
@@ -193,7 +223,7 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Movies',
+              $ref: '#/components/schemas/MovieBody',
             },
           },
         },
@@ -226,4 +256,11 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
   },
 };
 
-export { moviesSchema, moviesBodySchema, moviesJoiSchema, moviesJoiBodySchema, moviesSwaggerDocsPathSchema };
+export {
+  moviesSchema,
+  moviesBodySchema,
+  moviesJoiSchema,
+  moviesJoiBodySchema,
+  moviesSwaggerDocsPathSchema,
+  movieMongooseSchema,
+};

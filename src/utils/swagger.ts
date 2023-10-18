@@ -37,9 +37,9 @@ const swaggerOptions: swaggerJsdoc.Options = {
         Movies: {
           ...moviesSchema,
           example: {
-            id: '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d',
-            title: 'The Lion King',
-            description: 'Incredible movie description',
+            _id: '6530713c9d403ed66accbd42',
+            title: 'The Lion King 3',
+            description: 'Incredible movie description 1',
             releaseDate: '2010-07-16',
             genre: ['drama', 'comedy', 'horror'],
           },

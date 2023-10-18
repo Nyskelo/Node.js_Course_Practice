@@ -1,5 +1,9 @@
+import mongoose, { Types } from 'mongoose';
+
+import { movieMongooseSchema } from '../schemas/movies.schemas';
+
 export interface Movie {
-  id: string;
+  _id: Types.ObjectId;
   title: string;
   description: string;
   releaseDate: string;
@@ -12,3 +16,5 @@ export interface MovieBody {
   releaseDate: string;
   genre: string[];
 }
+
+export const MovieDB = mongoose.model('Movie', movieMongooseSchema);
