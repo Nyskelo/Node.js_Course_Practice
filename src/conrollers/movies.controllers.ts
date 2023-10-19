@@ -1,4 +1,4 @@
-import { Movie } from '../models/movies.models';
+import { Movie, MovieDB } from '../models/movies.models';
 
 import { Response, Request, NextFunction } from 'express';
 import { MongooseError } from 'mongoose';
@@ -26,6 +26,26 @@ export default class MovieController {
       }
 
       res.json(movies);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async GetMovieByGenreName(req: Request, res: Response, next: NextFunction): Promise<Response<Movie[]> | undefined> {
+    try {
+      const { genreName } = req.params;
+      const allMoviesByGenre = await movieService.GetMovieByGenreName(genreName);
+
+      if (!allMoviesByGenre.length) {
+        const response = {
+          status: 200,
+          message: 'There are no movies found by this genre, feel free to add a new movie :)',
+        };
+
+        return res.status(200).send({ response: response });
+      }
+
+      res.json(allMoviesByGenre);
     } catch (error) {
       next(error);
     }

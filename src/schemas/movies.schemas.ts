@@ -254,6 +254,44 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
       },
     },
   },
+  '/movies/genre/{genreName}': {
+    get: {
+      summary: 'Get a movie by genre',
+      tags: ['Movies'],
+      parameters: [
+        {
+          in: 'path',
+          name: 'genreName',
+          required: true,
+          description: 'Genre name of the movie',
+          schema: {
+            type: 'string',
+          },
+        },
+      ],
+      responses: {
+        200: {
+          description: 'Returns all of the movies that contain this genre.',
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/Movies',
+              },
+            },
+          },
+        },
+        404: {
+          $ref: '#/components/responses/404',
+        },
+        500: {
+          $ref: '#/components/responses/500',
+        },
+        503: {
+          $ref: '#/components/responses/503',
+        },
+      },
+    },
+  },
 };
 
 export {

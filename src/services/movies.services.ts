@@ -10,6 +10,10 @@ export default class MovieService {
     return await MovieDB.find({});
   }
 
+  async GetMovieByGenreName(genreName: string): Promise<Movie[]> {
+    return await MovieDB.find({ genre: { $in: [genreName] } });
+  }
+
   async GetMovieById(movieId: string): Promise<Movie | null> {
     return await MovieDB.findById(movieId);
   }

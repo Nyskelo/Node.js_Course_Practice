@@ -31,6 +31,13 @@ moviesRouter.get('/:id', movieController.GetMovieById);
 
 /**
  * @swagger
+ * /movies/genre/{genreName}:
+ *      $ref: '#/components/paths/~1movies~1genre~1{genreName}'
+ */
+moviesRouter.get('/genre/:genreName', movieController.GetMovieByGenreName);
+
+/**
+ * @swagger
  * /movies:
  *  $ref: '#/components/paths/~1movies'
  */
