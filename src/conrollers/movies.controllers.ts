@@ -1,4 +1,4 @@
-import { Movie, MovieDB } from '../models/movies.models';
+import { Movie } from '../models/movies.models';
 
 import { Response, Request, NextFunction } from 'express';
 import { MongooseError } from 'mongoose';

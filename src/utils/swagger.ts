@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import { moviesSchema, moviesBodySchema, moviesSwaggerDocsPathSchema } from '../schemas/movies.schemas';
+import { genreSchema, genreBodySchema, genreSwaggerDocsPathSchema } from '../schemas/genres.schemas';
 
 const swaggerOptions: swaggerJsdoc.Options = {
   definition: {
@@ -53,9 +54,23 @@ const swaggerOptions: swaggerJsdoc.Options = {
             genre: ['drama', 'comedy', 'horror'],
           },
         },
+        Genres: {
+          ...genreSchema,
+          example: {
+            _id: '6530713c9d403ed66accbd42',
+            name: 'horror',
+          },
+        },
+        GenreBody: {
+          ...genreBodySchema,
+          example: {
+            name: 'horror',
+          },
+        },
       },
       paths: {
         ...moviesSwaggerDocsPathSchema,
+        ...genreSwaggerDocsPathSchema,
       },
       responses: {
         200: {
