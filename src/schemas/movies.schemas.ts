@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import j2s, { SwaggerSchema } from 'joi-to-swagger';
-import mongoose, { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 const moviesJoiSchema = Joi.object().keys({
   _id: Joi.string().description('Server-generated ID for the movie'),
