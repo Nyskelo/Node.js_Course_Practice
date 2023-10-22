@@ -11,4 +11,4 @@ export interface GenreBody {
   name: string;
 }
 
-export const GenreDB = mongoose.model('Genre', genreMongooseSchema);
+export const GenreDb = mongoose.model('Genre', genreMongooseSchema);

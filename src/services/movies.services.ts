@@ -1,28 +1,28 @@
-import { Movie, MovieBody, MovieDB } from '../models/movies.models';
+import { Movie, MovieBody, MovieDb } from '../models/movies.models';
 
 export default class MovieService {
   async CreateMovie(movie: MovieBody): Promise<Movie> {
-    const movieToAdd = new MovieDB(movie);
+    const movieToAdd = new MovieDb(movie);
     return await movieToAdd.save();
   }
 
   async GetAllMovies(): Promise<Movie[]> {
-    return await MovieDB.find({});
+    return await MovieDb.find({});
   }
 
   async GetMovieByGenreName(genreName: string): Promise<Movie[]> {
-    return await MovieDB.find({ genre: { $in: [genreName] } });
+    return await MovieDb.find({ genre: { $in: [genreName] } });
   }
 
   async GetMovieById(movieId: string): Promise<Movie | null> {
-    return await MovieDB.findById(movieId);
+    return await MovieDb.findById(movieId);
   }
 
   async DeleteMovieById(movieId: string): Promise<Movie | null> {
-    return await MovieDB.findByIdAndDelete(movieId);
+    return await MovieDb.findByIdAndDelete(movieId);
   }
 
   async UpdateMovieById(movieId: string, updatedMovie: Movie): Promise<Movie | null> {
-    return await MovieDB.findByIdAndUpdate(movieId, updatedMovie, { new: true });
+    return await MovieDb.findByIdAndUpdate(movieId, updatedMovie, { new: true });
   }
 }

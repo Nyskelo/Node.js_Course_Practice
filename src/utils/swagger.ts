@@ -41,7 +41,7 @@ const swaggerOptions: swaggerJsdoc.Options = {
             _id: '6530713c9d403ed66accbd42',
             title: 'The Lion King 3',
             description: 'Incredible movie description 1',
-            releaseDate: '2010-07-16',
+            releaseDate: '2010-07-16T00:00:00.000Z',
             genre: ['drama', 'comedy', 'horror'],
           },
         },

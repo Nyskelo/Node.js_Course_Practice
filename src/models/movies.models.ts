@@ -6,7 +6,7 @@ export interface Movie {
   _id: Types.ObjectId;
   title: string;
   description: string;
-  releaseDate: string;
+  releaseDate: Date;
   genre: string[];
 }
 
@@ -17,4 +17,4 @@ export interface MovieBody {
   genre: string[];
 }
 
-export const MovieDB = mongoose.model('Movie', movieMongooseSchema);
+export const MovieDb = mongoose.model('Movie', movieMongooseSchema);

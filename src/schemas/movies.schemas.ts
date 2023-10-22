@@ -6,7 +6,7 @@ const moviesJoiSchema = Joi.object().keys({
   _id: Joi.string().description('Server-generated ID for the movie'),
   title: Joi.string().required(),
   description: Joi.string().required(),
-  releaseDate: Joi.string().required(),
+  releaseDate: Joi.date().required(),
   genre: Joi.array().items(Joi.string()).required(),
 });
 
@@ -27,7 +27,7 @@ const movieMongooseSchema = new mongoose.Schema({
     required: true,
   },
   releaseDate: {
-    type: String,
+    type: Date,
     required: true,
   },
   genre: {

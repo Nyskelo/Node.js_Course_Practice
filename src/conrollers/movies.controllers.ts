@@ -13,6 +13,9 @@ export default class MovieController {
       const movie = await movieService.CreateMovie(req.body);
       res.status(201).json(movie);
     } catch (error) {
+      if (error instanceof MongooseError) {
+        res.status(400).json({ error: { status: 400, message: "'releaseDate' is not a valid Date." } });
+      }
       next(error);
     }
   }

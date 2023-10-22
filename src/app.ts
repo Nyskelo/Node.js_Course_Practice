@@ -1,5 +1,4 @@
-import express from 'express';
-import { Express } from 'express';
+import express, { Express } from 'express';
 
 import errorHandler from './middleware/errorHandler.middleware';
 import rootRouter from './routes';
