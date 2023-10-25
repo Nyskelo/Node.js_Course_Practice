@@ -24,8 +24,8 @@ export default class MovieController {
     try {
       const movies = await movieService.GetAllMovies();
       if (!movies.length) {
-        const response = { status: 200, message: 'No movies found, feel free to add a movie :)' };
-        return res.status(200).send({ response: response });
+        const response = { status: 204, message: 'No movies found, feel free to add a movie :)' };
+        return res.status(204).send({ response });
       }
 
       res.json(movies);
@@ -41,11 +41,11 @@ export default class MovieController {
 
       if (!allMoviesByGenre.length) {
         const response = {
-          status: 200,
+          status: 204,
           message: 'There are no movies found by this genre, feel free to add a new movie :)',
         };
 
-        return res.status(200).send({ response: response });
+        return res.status(204).send({ response });
       }
 
       res.json(allMoviesByGenre);

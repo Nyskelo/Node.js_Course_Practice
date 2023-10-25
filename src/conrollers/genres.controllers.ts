@@ -14,7 +14,7 @@ export default class GenreController {
       const genreByName = await genreService.FindGenreByName(name);
 
       if (genreByName.length) {
-        res.status(200).json({ respons: { status: 200, message: `The genre '${name}' is already exist.` } });
+        res.status(409).json({ error: { status: 409, message: `The genre '${name}' is already exist.` } });
       } else {
         const genre = await genreService.CreateGenre(req.body);
         res.status(201).json(genre);
@@ -28,8 +28,8 @@ export default class GenreController {
     try {
       const genres = await genreService.GetAllGenres();
       if (!genres.length) {
-        const response = { status: 200, message: 'No genres found, feel free to add a genre :)' };
-        return res.status(200).send({ response: response });
+        const response = { status: 204, message: 'No genres found, feel free to add a genre :)' };
+        return res.status(204).send({ response });
       }
 
       res.json(genres);
@@ -73,7 +73,7 @@ export default class GenreController {
       const genreByName = await genreService.FindGenreByName(name);
 
       if (genreByName.length) {
-        res.status(200).json({ respons: { status: 200, message: `The genre with name '${name}' is already exist.` } });
+        res.status(409).json({ error: { status: 409, message: `The genre with name '${name}' is already exist.` } });
       } else {
         const { id } = req.params;
         const genre = await genreService.UpdateGenreById(id, req.body);
