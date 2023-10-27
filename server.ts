@@ -1,10 +1,13 @@
+import dotenv from 'dotenv';
 import http from 'http';
 import mongoose from 'mongoose';
 
 import app from './src/app';
 
+dotenv.config();
+
 const PORT = process.env.PORT || 3000;
-const CONNECTION_STRING = 'mongodb+srv://allaoleksyn:0x7EU2u6HoiYxPCS@cluster0.nqxzydv.mongodb.net/NODE_JS';
+const CONNECTION_STRING = process.env.DB_CONNECTION_STRING || '';
 
 const server = http.createServer(app);
 
