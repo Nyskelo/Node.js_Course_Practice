@@ -1,57 +1,28 @@
-import {Movie, MovieBody} from '../models/movies.models';
-import {v4 as uuidv4} from 'uuid';
-import {promises as fs} from 'fs';
-import path from 'path';
+import { Movie, MovieBody, MovieDb } from '../models/movies.models';
 
-const moviesPath: string = path.resolve(__dirname, '../db/movies.db.json');
+export default class MovieService {
+  async CreateMovie(movie: MovieBody): Promise<Movie> {
+    const movieToAdd = new MovieDb(movie);
+    return await movieToAdd.save();
+  }
 
-const writeMovies = async (movies: Movie[]): Promise<void> => {
-	await fs.writeFile(moviesPath, JSON.stringify(movies), 'utf-8');
-};
+  async GetAllMovies(): Promise<Movie[]> {
+    return await MovieDb.find({});
+  }
 
-const readMovies = async (): Promise<Movie[]> => {
-	const data = await fs.readFile(moviesPath, 'utf-8');
-	return JSON.parse(data);
-};
+  async GetMovieByGenreName(genreName: string): Promise<Movie[]> {
+    return await MovieDb.find({ genre: { $in: [genreName] } });
+  }
 
-const getAllMovies = async (): Promise<Movie[]> => {
-	return readMovies();
-};
+  async GetMovieById(movieId: string): Promise<Movie | null> {
+    return await MovieDb.findById(movieId);
+  }
 
-const getMovieById = async (id: string): Promise<Movie | undefined> => {
-	const movies: Movie[] = await readMovies();
+  async DeleteMovieById(movieId: string): Promise<Movie | null> {
+    return await MovieDb.findByIdAndDelete(movieId);
+  }
 
-	return movies.find((movie: Movie) => movie.id === id);
-};
-
-const removeMovieById = async (id: string): Promise<void> => {
-	const movies: Movie[] = await readMovies();
-	const movie = movies.filter((movie: Movie) => movie.id !== id);
-
-	await writeMovies(movie);
-};
-
-const addMovie = async (data: MovieBody): Promise<Movie> => {
-	const movies: Movie[] = await readMovies();
-
-	const newMovie: Movie = {id: uuidv4(), ...data};
-	movies.push(newMovie);
-
-	await writeMovies(movies);
-
-	return newMovie;
-};
-
-const updateMovieById = async (updatedData: Movie): Promise<Movie | undefined> => {
-	const movies: Movie[] = await readMovies();
-
-	const updatedMovies: Movie[] = movies.map((movie: Movie) =>
-		movie.id === updatedData.id ? {...movie, ...updatedData} : movie
-	);
-	const updatedMovie: Movie | undefined = updatedMovies.find((movie: Movie) => movie.id === updatedData.id);
-
-	await writeMovies(updatedMovies);
-	return updatedMovie;
-};
-
-export {getAllMovies, getMovieById, removeMovieById, addMovie, updateMovieById};
+  async UpdateMovieById(movieId: string, updatedMovie: Movie): Promise<Movie | null> {
+    return await MovieDb.findByIdAndUpdate(movieId, updatedMovie, { new: true });
+  }
+}

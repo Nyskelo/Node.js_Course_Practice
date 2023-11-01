@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import swaggerUi from 'swagger-ui-express';
 
 import swaggerSpec from '../utils/swagger';

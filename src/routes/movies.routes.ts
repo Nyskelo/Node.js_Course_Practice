@@ -1,9 +1,12 @@
-import {Router, Response, Request, NextFunction} from 'express';
+import { Router } from 'express';
 
-import * as moviesService from '../services/movies.services';
-import {moviesJoiSchema, moviesJoiBodySchema} from '../schemas/movies.schemas';
+import MovieController from '../conrollers/movies.controllers';
+
+import { validateMiddleware } from '../middleware/validate.middleware';
+import { validateMovieBody } from '../validation/movies.validation';
 
 const moviesRouter: Router = Router();
+const movieController = new MovieController();
 
 /**
  * @swagger
@@ -17,86 +20,41 @@ const moviesRouter: Router = Router();
  * /movies:
  *      $ref: '#/components/paths/~1movies'
  */
-moviesRouter.get('/', async (_req: Request, res: Response, next: NextFunction) => {
-	try {
-		const movies = await moviesService.getAllMovies();
-		res.json(movies);
-	} catch (error) {
-		next(error);
-	}
-});
+moviesRouter.get('/', movieController.GetAllMovies);
 
 /**
  * @swagger
  * /movies/{id}:
  *      $ref: '#/components/paths/~1movies~1{id}'
  */
-moviesRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const {id} = req.params;
-		const movie = await moviesService.getMovieById(id);
+moviesRouter.get('/:id', movieController.GetMovieById);
 
-		if (!movie) {
-			return res.status(404).json({status: 404, message: 'Movie not found'});
-		}
-
-		res.json(movie);
-	} catch (error) {
-		next(error);
-	}
-});
+/**
+ * @swagger
+ * /movies/genre/{genreName}:
+ *      $ref: '#/components/paths/~1movies~1genre~1{genreName}'
+ */
+moviesRouter.get('/genre/:genreName', movieController.GetMovieByGenreName);
 
 /**
  * @swagger
  * /movies:
  *  $ref: '#/components/paths/~1movies'
  */
-moviesRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		await moviesJoiBodySchema.validateAsync(req.body);
-		const movie = await moviesService.addMovie(req.body);
-		res.status(201).json(movie);
-	} catch (error) {
-		next(error);
-	}
-});
+moviesRouter.post('/', [validateMiddleware(validateMovieBody)], movieController.CreateMovie);
 
 /**
  * @swagger
  * /movies/{id}:
  *  $ref: '#/components/paths/~1movies~1{id}'
  */
-moviesRouter.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const {id} = req.params;
-		const movie = await moviesService.getMovieById(id);
-
-		if (!movie) {
-			return res.status(404).json({error: 'Movie not found'});
-		}
-
-		await moviesService.removeMovieById(id);
-		res.sendStatus(200);
-	} catch (error) {
-		next(error);
-	}
-});
+moviesRouter.delete('/:id', movieController.DeleteMovieById);
 
 /**
  * @swagger
  * /movies/{id}:
  *  $ref: '#/components/paths/~1movies~1{id}'
  */
-moviesRouter.put('/:id', async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		await moviesJoiSchema.validateAsync(req.body);
-
-		const movie = await moviesService.updateMovieById(req.body);
-
-		res.json(movie);
-	} catch (error) {
-		next(error);
-	}
-});
+moviesRouter.put('/:id', [validateMiddleware(validateMovieBody)], movieController.UpdateMovieById);
 
 export default moviesRouter;
