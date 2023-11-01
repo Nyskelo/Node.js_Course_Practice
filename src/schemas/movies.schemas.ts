@@ -17,24 +17,27 @@ const moviesJoiBodySchema = Joi.object().keys({
   genre: Joi.array().items(Joi.string()).required(),
 });
 
-const movieMongooseSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const movieMongooseSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    releaseDate: {
+      type: Date,
+      required: true,
+    },
+    genre: {
+      type: [String],
+      required: true,
+    },
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  releaseDate: {
-    type: Date,
-    required: true,
-  },
-  genre: {
-    type: [String],
-    required: true,
-  },
-});
+  { versionKey: false },
+);
 
 const moviesSchema: SwaggerSchema = j2s(moviesJoiSchema).swagger;
 const moviesBodySchema: SwaggerSchema = j2s(moviesJoiBodySchema).swagger;
@@ -172,7 +175,7 @@ const moviesSwaggerDocsPathSchema: SwaggerSchema = {
               schema: {
                 type: 'object',
                 example: {
-                  respons: {
+                  response: {
                     status: 200,
                     message: 'The movie has been deleted',
                     movie: {

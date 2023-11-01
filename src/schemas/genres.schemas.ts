@@ -11,13 +11,16 @@ const genreBodyJoiSchema = Joi.object().keys({
   name: Joi.string().required(),
 });
 
-const genreMongooseSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: true,
+const genreMongooseSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: true,
+    },
   },
-});
+  { versionKey: false },
+);
 
 const genreSchema: SwaggerSchema = j2s(genreJoiSchema).swagger;
 const genreBodySchema: SwaggerSchema = j2s(genreBodyJoiSchema).swagger;
@@ -155,7 +158,7 @@ const genreSwaggerDocsPathSchema: SwaggerSchema = {
               schema: {
                 type: 'object',
                 example: {
-                  respons: {
+                  response: {
                     status: 200,
                     message: 'The genre has been deleted',
                     movie: {
@@ -184,7 +187,7 @@ const genreSwaggerDocsPathSchema: SwaggerSchema = {
       },
     },
     put: {
-      summary: 'Update a movie by id',
+      summary: 'Update a genre by id',
       tags: ['Genres'],
       parameters: [
         {

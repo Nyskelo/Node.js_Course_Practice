@@ -74,7 +74,11 @@ export default class MovieController {
       const { id } = req.params;
       const movie = await movieService.DeleteMovieById(id);
 
-      res.status(200).json({ respons: { status: 200, message: 'The movie has been deleted', movie } });
+      if (!movie) {
+        return res.status(404).json({ error: { status: 404, message: 'Movie not found' } });
+      }
+
+      return res.status(200).json({ response: { status: 200, message: 'The movie has been deleted', movie } });
     } catch (error) {
       if (error instanceof MongooseError) {
         return res.status(404).json({ error: { status: 404, message: 'Movie not found' } });

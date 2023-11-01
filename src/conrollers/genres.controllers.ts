@@ -58,7 +58,11 @@ export default class GenreController {
       const { id } = req.params;
       const genre = await genreService.DeleteGenreById(id);
 
-      res.status(200).json({ respons: { status: 200, message: 'The Genre has been deleted', genre } });
+      if (!genre) {
+        return res.status(404).json({ error: { status: 404, message: 'Genre not found' } });
+      }
+
+      res.status(200).json({ response: { status: 200, message: 'The Genre has been deleted', genre } });
     } catch (error) {
       if (error instanceof MongooseError) {
         return res.status(404).json({ error: { status: 404, message: 'Genre not found' } });
