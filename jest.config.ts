@@ -5,6 +5,7 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./src/__mock__/setup-jest.ts'],
+  transform: { '^.+\\.(ts)$': 'ts-jest' },
 };
 
 export default config;
