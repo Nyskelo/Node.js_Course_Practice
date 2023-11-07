@@ -1,23 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
-import { MongooseError } from 'mongoose';
 import { MockProxy, mock } from 'jest-mock-extended';
 
 import GenreController from './../conrollers/genres.controllers';
 import { GenreDb } from '../models/genres.models';
-import { mockGenreData } from './../__mock__/mock-data';
+import { DbMock, ErrorMock, responseMock } from './../__mock__/mock-data';
 
 describe('GenreController', () => {
   let genreController: GenreController;
   let mockRequest: MockProxy<Request>;
   let mockResponse: MockProxy<Response>;
   const mockNext: NextFunction = jest.fn();
-
-  const errorMock = new Error('error');
-  const mongooseErrorMock = new MongooseError('error');
-  const responseMock = {
-    status: expect.any(Number),
-    message: expect.any(String),
-  };
 
   beforeEach(() => {
     genreController = new GenreController();
@@ -35,12 +27,12 @@ describe('GenreController', () => {
   describe('GetAllGenres', () => {
     describe('success', () => {
       it('should return a successful response with a status code of 200 and body with all genres', async () => {
-        GenreDb.find = jest.fn().mockResolvedValue(mockGenreData);
+        GenreDb.find = jest.fn().mockResolvedValue(DbMock.genreData);
 
         await genreController.GetAllGenres(mockRequest, mockResponse, mockNext);
 
         expect(mockResponse.json).toHaveBeenCalledTimes(1);
-        expect(mockResponse.json).toHaveBeenCalledWith(mockGenreData);
+        expect(mockResponse.json).toHaveBeenCalledWith(DbMock.genreData);
 
         expect(mockResponse.status).toHaveBeenCalledTimes(1);
         expect(mockResponse.status).toHaveBeenCalledWith(200);
@@ -65,24 +57,24 @@ describe('GenreController', () => {
 
     describe('error', () => {
       it('should call the next function with an error', async () => {
-        GenreDb.find = jest.fn().mockRejectedValue(errorMock);
+        GenreDb.find = jest.fn().mockRejectedValue(ErrorMock.error);
 
         await genreController.GetAllGenres(mockRequest, mockResponse, mockNext);
 
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockNext).toHaveBeenCalledWith(errorMock);
+        expect(mockNext).toHaveBeenCalledWith(ErrorMock.error);
       });
     });
   });
 
   describe('CreateGenre', () => {
     beforeEach(() => {
-      mockRequest.body = { name: mockGenreData[0].name };
+      mockRequest.body = { name: DbMock.genreData[0].name };
     });
 
     describe('success', () => {
       it('should return a successful response with a status code of 201 and body with a newly created genre', async () => {
-        const newGenre = mockGenreData[0];
+        const newGenre = DbMock.genreData[0];
         GenreDb.find = jest.fn().mockResolvedValue([]);
         GenreDb.prototype.save = jest.fn().mockResolvedValue(newGenre);
 
@@ -98,7 +90,7 @@ describe('GenreController', () => {
 
     describe('error', () => {
       it('should return a status code of 409, error message', async () => {
-        GenreDb.find = jest.fn().mockResolvedValue([mockGenreData[0].name]);
+        GenreDb.find = jest.fn().mockResolvedValue([DbMock.genreData[0].name]);
 
         await genreController.CreateGenre(mockRequest, mockResponse, mockNext);
 
@@ -116,7 +108,7 @@ describe('GenreController', () => {
       });
 
       it('should call the next function with an error', async () => {
-        GenreDb.find = jest.fn().mockRejectedValue(errorMock);
+        GenreDb.find = jest.fn().mockRejectedValue(ErrorMock.error);
 
         await genreController.CreateGenre(mockRequest, mockResponse, mockNext);
 
@@ -124,7 +116,7 @@ describe('GenreController', () => {
         expect(mockResponse.status).not.toHaveBeenCalled();
 
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockNext).toHaveBeenCalledWith(errorMock);
+        expect(mockNext).toHaveBeenCalledWith(ErrorMock.error);
       });
     });
   });
@@ -132,7 +124,7 @@ describe('GenreController', () => {
   describe('GetGenreById', () => {
     describe('success', () => {
       it('should return a successful response with a status code of 200 and body with a correct genre', async () => {
-        const expectedGenre = mockGenreData[0];
+        const expectedGenre = DbMock.genreData[0];
         GenreDb.findById = jest.fn().mockResolvedValue(expectedGenre);
 
         await genreController.GetGenreById(mockRequest, mockResponse, mockNext);
@@ -147,7 +139,7 @@ describe('GenreController', () => {
 
     describe('error', () => {
       it('should return a status code of 404 and an error message if the error type is MongooseError', async () => {
-        GenreDb.findById = jest.fn().mockRejectedValue(mongooseErrorMock);
+        GenreDb.findById = jest.fn().mockRejectedValue(ErrorMock.mongooseError);
 
         await genreController.GetGenreById(mockRequest, mockResponse, mockNext);
 
@@ -165,7 +157,7 @@ describe('GenreController', () => {
       });
 
       it('should call the next function with an error', async () => {
-        GenreDb.findById = jest.fn().mockRejectedValue(errorMock);
+        GenreDb.findById = jest.fn().mockRejectedValue(ErrorMock.error);
 
         await genreController.GetGenreById(mockRequest, mockResponse, mockNext);
 
@@ -173,7 +165,7 @@ describe('GenreController', () => {
         expect(mockResponse.status).not.toHaveBeenCalled();
 
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockNext).toHaveBeenCalledWith(errorMock);
+        expect(mockNext).toHaveBeenCalledWith(ErrorMock.error);
       });
     });
   });
@@ -181,7 +173,7 @@ describe('GenreController', () => {
   describe('DeleteGenreById', () => {
     describe('success', () => {
       it('should return a successful response with a status code of 200 and body with a deleted genre', async () => {
-        const genreToDelete = mockGenreData[0];
+        const genreToDelete = DbMock.genreData[0];
         GenreDb.findByIdAndDelete = jest.fn().mockResolvedValue(genreToDelete);
 
         await genreController.DeleteGenreById(mockRequest, mockResponse, mockNext);
@@ -200,7 +192,7 @@ describe('GenreController', () => {
 
     describe('error', () => {
       it('should return a status code of 404 and an error message if the genre by the same id is attempted to be deleted more than once', async () => {
-        const genreToDelete = mockGenreData[0];
+        const genreToDelete = DbMock.genreData[0];
         GenreDb.findByIdAndDelete = jest.fn().mockResolvedValueOnce(genreToDelete).mockResolvedValueOnce(null);
 
         await genreController.DeleteGenreById(mockRequest, mockResponse, mockNext);
@@ -220,7 +212,7 @@ describe('GenreController', () => {
       });
 
       it('should return a status code of 404 and an error message if the error type is MongooseError', async () => {
-        GenreDb.findByIdAndDelete = jest.fn().mockRejectedValue(mongooseErrorMock);
+        GenreDb.findByIdAndDelete = jest.fn().mockRejectedValue(ErrorMock.mongooseError);
 
         await genreController.DeleteGenreById(mockRequest, mockResponse, mockNext);
 
@@ -238,7 +230,7 @@ describe('GenreController', () => {
       });
 
       it('should call the next function with an error', async () => {
-        GenreDb.findByIdAndDelete = jest.fn().mockRejectedValue(errorMock);
+        GenreDb.findByIdAndDelete = jest.fn().mockRejectedValue(ErrorMock.error);
 
         await genreController.DeleteGenreById(mockRequest, mockResponse, mockNext);
 
@@ -246,7 +238,7 @@ describe('GenreController', () => {
         expect(mockResponse.status).not.toHaveBeenCalled();
 
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockNext).toHaveBeenCalledWith(errorMock);
+        expect(mockNext).toHaveBeenCalledWith(ErrorMock.error);
       });
     });
   });
@@ -254,7 +246,7 @@ describe('GenreController', () => {
   describe('UpdateGenreById', () => {
     describe('success', () => {
       it('should return a successful response with a status code of 200 and body with a deleted genre', async () => {
-        const genreToUpdate = { ...mockGenreData[0], name: ['new genre name'] };
+        const genreToUpdate = { ...DbMock.genreData[0], name: ['new genre name'] };
         GenreDb.find = jest.fn().mockResolvedValue([]);
         GenreDb.findByIdAndUpdate = jest.fn().mockResolvedValue(genreToUpdate);
 
@@ -270,7 +262,7 @@ describe('GenreController', () => {
 
     describe('error', () => {
       it('should return a status code of 404 and an error message if the genre by the same name is already exist', async () => {
-        const genreToUpdate = { ...mockGenreData[0], name: ['new genre name'] };
+        const genreToUpdate = { ...DbMock.genreData[0], name: ['new genre name'] };
         GenreDb.find = jest.fn().mockResolvedValue(genreToUpdate.name);
 
         await genreController.UpdateGenreById(mockRequest, mockResponse, mockNext);
@@ -289,7 +281,7 @@ describe('GenreController', () => {
       });
 
       it('should call the next function with an error', async () => {
-        GenreDb.find = jest.fn().mockRejectedValue(errorMock);
+        GenreDb.find = jest.fn().mockRejectedValue(ErrorMock.error);
 
         await genreController.UpdateGenreById(mockRequest, mockResponse, mockNext);
 
@@ -297,7 +289,7 @@ describe('GenreController', () => {
         expect(mockResponse.status).not.toHaveBeenCalled();
 
         expect(mockNext).toHaveBeenCalledTimes(1);
-        expect(mockNext).toHaveBeenCalledWith(errorMock);
+        expect(mockNext).toHaveBeenCalledWith(ErrorMock.error);
       });
     });
   });
