@@ -7,7 +7,7 @@ export const validateMiddleware = <T>(validator: JoiValidationFn<T>) => {
     const { error } = validator(req.body);
     if (error) {
       const errorResponse = { status: 400, message: error.details[0].message.replace(/"/g, "'") };
-      return res.status(400).send({ error: errorResponse });
+      return res.status(400).json({ error: errorResponse });
     }
     next();
   };
