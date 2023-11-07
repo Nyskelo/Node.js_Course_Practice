@@ -6,7 +6,9 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./src/__mock__/setup-jest.ts'],
   transform: { '^.+\\.(ts)$': 'ts-jest' },
-  coverageReporters: ['cobertura', 'text-summary', 'json-summary', 'html'],
+  collectCoverage: true,
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
+  coveragePathIgnorePatterns: ['/__mock__/'],
 };
 
 export default config;
