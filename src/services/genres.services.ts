@@ -22,7 +22,7 @@ export default class GenreService {
     return await GenreDb.findByIdAndDelete(genreId);
   }
 
-  async UpdateGenreById(genreId: string, updatedGenre: Genre): Promise<Genre | null> {
+  async UpdateGenreById(genreId: string, updatedGenre: GenreBody): Promise<Genre | null> {
     return await GenreDb.findByIdAndUpdate(genreId, updatedGenre, { new: true });
   }
 }
