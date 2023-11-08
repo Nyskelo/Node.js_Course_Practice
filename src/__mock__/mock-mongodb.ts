@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
+// eslint-disable-next-line prefer-const
 let mongoServer: MongoMemoryServer | undefined = undefined;
 
 const connect = async () => {
@@ -30,4 +31,3 @@ const dropCollections = async () => {
 };
 
 export { connect, dropDatabase, dropCollections };
-

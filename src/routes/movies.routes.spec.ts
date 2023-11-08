@@ -3,7 +3,7 @@ import { MovieDb } from '../models/movies.models';
 import { DbMock, responseMock } from './../__mock__/mock-data';
 
 describe('Movies endpoints', () => {
-  let { title, description, releaseDate, genre } = DbMock.movieData[0];
+  const { title, description, releaseDate, genre } = DbMock.movieData[0];
   const movieBodyMock = { title, description, releaseDate, genre };
 
   afterEach(async () => {

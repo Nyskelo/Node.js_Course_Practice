@@ -4,7 +4,7 @@ import MovieService from './movies.services';
 
 describe('Movies endpoints', () => {
   let movieService: MovieService;
-  let { title, description, genre, releaseDate } = DbMock.movieData[0];
+  const { title, description, genre, releaseDate } = DbMock.movieData[0];
   const movieBodyMock = {
     title,
     description,
