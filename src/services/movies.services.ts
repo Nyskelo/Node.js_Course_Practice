@@ -22,7 +22,7 @@ export default class MovieService {
     return await MovieDb.findByIdAndDelete(movieId);
   }
 
-  async UpdateMovieById(movieId: string, updatedMovie: Movie): Promise<Movie | null> {
+  async UpdateMovieById(movieId: string, updatedMovie: MovieBody): Promise<Movie | null> {
     return await MovieDb.findByIdAndUpdate(movieId, updatedMovie, { new: true });
   }
 }
