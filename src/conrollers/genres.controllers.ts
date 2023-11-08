@@ -17,6 +17,7 @@ export default class GenreController {
         res.status(409).json({ error: { status: 409, message: `The genre '${name}' is already exist.` } });
       } else {
         const genre = await genreService.CreateGenre(req.body);
+
         res.status(201).json(genre);
       }
     } catch (error) {

@@ -1,7 +1,7 @@
-import { Genre, GenreDb } from '../models/genres.models';
+import { Genre, GenreBody, GenreDb } from '../models/genres.models';
 
 export default class GenreService {
-  async CreateGenre(genre: Genre): Promise<Genre> {
+  async CreateGenre(genre: GenreBody): Promise<Genre> {
     const genreToAdd = new GenreDb(genre);
     return await genreToAdd.save();
   }
