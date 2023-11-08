@@ -12,12 +12,12 @@ export let requestStub: Record<string, RequestStub>;
 
 beforeAll(async () => {
   await db.connect();
-  requestStub = {
-    get: sinon.stub(request, 'get'),
-    post: sinon.stub(request, 'post'),
-    put: sinon.stub(request, 'put'),
-    delete: sinon.stub(request, 'delete'),
-  };
+  // requestStub = {
+  //   get: sinon.stub(request, 'get'),
+  //   post: sinon.stub(request, 'post'),
+  //   put: sinon.stub(request, 'put'),
+  //   delete: sinon.stub(request, 'delete'),
+  // };
 });
 
 afterEach(async () => await db.dropCollections());
