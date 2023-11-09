@@ -13,7 +13,8 @@
     "prettier:fix": "prettier  --write  \"src/**/*.+(ts|json)\"",
     "lint:check": "npm run eslint:check && npm run prettier:check",
     "lint:fix": "npm run eslint:fix && npm run prettier:fix",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:coverage": "jest --runInBand --detectOpenHandles --collectCoverage"
   },
   "author": "Alla Oleksyn",
   "license": "ISC",
