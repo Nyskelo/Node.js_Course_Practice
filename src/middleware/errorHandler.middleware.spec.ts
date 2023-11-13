@@ -10,7 +10,7 @@ describe('Error Handler Middleware', () => {
   let mockResponse: MockProxy<Response>;
   const mockNext: NextFunction = jest.fn();
 
-  const errorNotFound: Error = {
+  const error: Error = {
     status: 499,
     message: 'error',
   };
@@ -23,14 +23,14 @@ describe('Error Handler Middleware', () => {
     mockResponse.json.mockReturnThis();
   });
 
-  it('should send the error with the provided status and message when error has a status', () => {
-    errorHandler(errorNotFound, mockRequest, mockResponse, mockNext);
+  it('should send the error with the provided status and message', () => {
+    errorHandler(error, mockRequest, mockResponse, mockNext);
 
     expect(mockResponse.status).toHaveBeenCalledWith(499);
-    expect(mockResponse.json).toHaveBeenCalledWith({ error: errorNotFound });
+    expect(mockResponse.json).toHaveBeenCalledWith({ error });
   });
 
-  it('should handle unexpected or internal server error and return a 500 error response', () => {
+  it('should handle unexpected or internal server errors with a status code of 500 and error message', () => {
     errorHandler(ErrorMock.error, mockRequest, mockResponse, mockNext);
 
     expect(mockResponse.status).toHaveBeenCalledWith(500);
