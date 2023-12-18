@@ -8,13 +8,13 @@ import MovieService from '../services/movies.services';
 const movieService = new MovieService();
 
 export default class MovieController {
-  async CreateMovie(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async CreateMovie(req: Request, res: Response, next: NextFunction): Promise<Response<Movie> | undefined> {
     try {
       const movie = await movieService.CreateMovie(req.body);
       res.status(201).json(movie);
     } catch (error) {
       if (error instanceof MongooseError) {
-        res.status(400).json({ error: { status: 400, message: "'releaseDate' is not a valid Date." } });
+        return res.status(400).json({ error: { status: 400, message: "'releaseDate' is not a valid Date." } });
       }
       next(error);
     }
@@ -28,7 +28,7 @@ export default class MovieController {
         return res.status(204).send({ response });
       }
 
-      res.json(movies);
+      res.status(200).json(movies);
     } catch (error) {
       next(error);
     }
@@ -45,10 +45,10 @@ export default class MovieController {
           message: 'There are no movies found by this genre, feel free to add a new movie :)',
         };
 
-        return res.status(204).send({ response });
+        return res.status(204).json({ response });
       }
 
-      res.json(allMoviesByGenre);
+      res.status(200).json(allMoviesByGenre);
     } catch (error) {
       next(error);
     }
@@ -59,7 +59,7 @@ export default class MovieController {
       const { id } = req.params;
       const movie = await movieService.GetMovieById(id);
 
-      res.json(movie);
+      res.status(200).json(movie);
     } catch (error) {
       if (error instanceof MongooseError) {
         return res.status(404).json({ error: { status: 404, message: 'Movie not found' } });
@@ -92,7 +92,7 @@ export default class MovieController {
       const { id } = req.params;
       const movie = await movieService.UpdateMovieById(id, req.body);
 
-      res.json(movie);
+      res.status(200).json(movie);
     } catch (error) {
       next(error);
     }

@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "prettier", "jest"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -23,6 +23,6 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "prettier/prettier": ["error"]
+    "@typescript-eslint/no-namespace": 0
   }
 }

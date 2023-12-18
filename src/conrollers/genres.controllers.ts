@@ -17,6 +17,7 @@ export default class GenreController {
         res.status(409).json({ error: { status: 409, message: `The genre '${name}' is already exist.` } });
       } else {
         const genre = await genreService.CreateGenre(req.body);
+
         res.status(201).json(genre);
       }
     } catch (error) {
@@ -32,7 +33,7 @@ export default class GenreController {
         return res.status(204).send({ response });
       }
 
-      res.json(genres);
+      res.status(200).json(genres);
     } catch (error) {
       next(error);
     }
@@ -43,12 +44,11 @@ export default class GenreController {
       const { id } = req.params;
       const genre = await genreService.GetGenreById(id);
 
-      res.json(genre);
+      res.status(200).json(genre);
     } catch (error) {
       if (error instanceof MongooseError) {
         return res.status(404).json({ error: { status: 404, message: 'Genre not found' } });
       }
-
       next(error);
     }
   }
@@ -71,18 +71,20 @@ export default class GenreController {
     }
   }
 
-  async UpdateGenreById(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async UpdateGenreById(req: Request, res: Response, next: NextFunction): Promise<Response<Genre> | undefined> {
     try {
       const { name } = req.body;
       const genreByName = await genreService.FindGenreByName(name);
 
       if (genreByName.length) {
-        res.status(409).json({ error: { status: 409, message: `The genre with name '${name}' is already exist.` } });
+        return res
+          .status(409)
+          .json({ error: { status: 409, message: `The genre with name '${name}' is already exist.` } });
       } else {
         const { id } = req.params;
         const genre = await genreService.UpdateGenreById(id, req.body);
 
-        res.json(genre);
+        return res.status(200).json(genre);
       }
     } catch (error) {
       next(error);

@@ -1,7 +1,7 @@
-import { Genre, GenreDb } from '../models/genres.models';
+import { Genre, GenreBody, GenreDb } from '../models/genres.models';
 
 export default class GenreService {
-  async CreateGenre(genre: Genre): Promise<Genre> {
+  async CreateGenre(genre: GenreBody): Promise<Genre> {
     const genreToAdd = new GenreDb(genre);
     return await genreToAdd.save();
   }
@@ -22,7 +22,7 @@ export default class GenreService {
     return await GenreDb.findByIdAndDelete(genreId);
   }
 
-  async UpdateGenreById(genreId: string, updatedGenre: Genre): Promise<Genre | null> {
+  async UpdateGenreById(genreId: string, updatedGenre: GenreBody): Promise<Genre | null> {
     return await GenreDb.findByIdAndUpdate(genreId, updatedGenre, { new: true });
   }
 }
